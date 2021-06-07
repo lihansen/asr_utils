@@ -38,4 +38,5 @@ mv train aishell/wav
 mv test aishell/wav
 
 mv *.txt aishell/transcript
-
+echo aishell-shape dataset prepared
+echo All done
