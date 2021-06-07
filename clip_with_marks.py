@@ -39,7 +39,7 @@ def clipping(wavepath, out_dir, file_num):
                     # clear bad chars
                     interval_sentence = re.sub(r"[^\u4e00-\u9fa5！。，？]", "", interval.mark)
                     # skip bad cases, such as: "", "重叠", "嗯。".
-                    if len(interval_sentence) > 2 and not (interval_sentence == "重叠。" or interval_sentence == "无效。"):
+                    if is_valid(interval_sentence):
                         # save previous short intervals as a single clip
                         # if the total length of the clip sentence is going to above 100
                         if len(clip_sentence) + len(interval_sentence) >= max_sentence_length:
@@ -66,6 +66,22 @@ def clipping(wavepath, out_dir, file_num):
                     clip_wavedata.clear()
 
         return transcript_lines
+
+
+def is_valid(sentence):
+    """
+    to filter invalid intervals
+    :param sentence:
+    :return: bool
+    """
+    if len(sentence) <= 2 or sentence == "无效。":
+        return False
+    words = re.sub(r"[重叠！？。，]", "", sentence)
+
+    if len(words) >= 2:
+        return True
+    else:
+        return False
 
 
 def save_clip(root_dir, file_num, clip_num, wave_data):

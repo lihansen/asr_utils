@@ -1,7 +1,7 @@
 clip=./clip_with_marks.py
 python3 $clip
 
-mdir dev test
+mkdir dev test
 
 data_dir=/data/dataset/sichuan_aishell_with_marks
 file_list=$(python3 file_list.py)
@@ -25,18 +25,18 @@ do
 	fi
 done
 
+mkdir $data_dir/train
+mv $data_dir/S* ./train
 
-mkdir train
-mv S* ./train
+mkdir $data_dir/aishell
+mkdir $data_dir/aishell/transcript
+mkdir $data_dir/aishell/wav
 
-mkdir aishell
-mkdir aishell/transcript
-mkdir aishell/wav
+mv $data_dir/dev $data_dir/aishell/wav
+mv $data_dir/train $data_dir/aishell/wav
+mv $data_dir/test $data_dir/aishell/wav
 
-mv dev aishell/wav
-mv train aishell/wav
-mv test aishell/wav
+mv $data_dir/aishell_transcript*.txt $data_dir/aishell/transcript/
 
-mv *.txt aishell/transcript
 echo aishell-shape dataset prepared
 echo All done
