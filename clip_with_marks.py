@@ -39,8 +39,7 @@ def clipping(wavepath, out_dir, file_num):
                     # clear bad chars
                     interval_sentence = re.sub(r"[^\u4e00-\u9fa5！。，？]", "", interval.mark)
                     # skip bad cases, such as: "", "重叠", "嗯。".
-                    if len(interval.mark) > 2:
-
+                    if len(interval_sentence) > 2 and not (interval_sentence == "重叠。" or interval_sentence == "无效。"):
                         # save previous short intervals as a single clip
                         # if the total length of the clip sentence is going to above 100
                         if len(clip_sentence) + len(interval_sentence) >= max_sentence_length:
@@ -143,8 +142,8 @@ if __name__ == "__main__":
     err_file = "error.txt"
     if os.path.exists(err_file):
         shutil.rmtree("error.txt")
-    if os.path.exists("output"):
-        shutil.rmtree("output")
-        os.mkdir("output")
-    walk("dataset", "output")
-
+    # if os.path.exists("output"):
+    #     shutil.rmtree("output")
+    # os.mkdir("output")
+    # walk("dataset", "output")
+    walk("/data/dataset/sichuan", "/data/dataset/sichuan_aishell_with_marks")
